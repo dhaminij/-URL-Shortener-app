@@ -1,7 +1,7 @@
 const URL = require('../models/url');
 const shortid = require('shortid');
 const user = require('../models/user');
-
+const mongoose = require('mongoose');
 
 const createShortUrl = async (req, res) => {
     try {
@@ -22,7 +22,7 @@ const createShortUrl = async (req, res) => {
         shortUrl, 
         customAlias,
         topic,
-        createdBy: mongoose.Types.ObjectId(req.user.id), 
+        createdBy: new mongoose.Types.ObjectId(req.user.id), 
       });
   
       await newUrl.save();
@@ -35,14 +35,11 @@ const createShortUrl = async (req, res) => {
       res.status(500).json({ message: 'Error creating short URL', error: err.message });
     }
   };
-  
-  
 //const URL = require('../models/url');
 
   const redirectShortUrl = async (req, res) => {
     try {
       const { alias } = req.params;
-  
       // Find the URL by shortUrl or customAlias
       const url = await URL.findOne({
         $or: [{ shortUrl: alias }, { customAlias: alias }],
@@ -64,7 +61,6 @@ const createShortUrl = async (req, res) => {
         device,
       });
       await url.save();
-  
       // Redirect to the original URL
       res.redirect(url.longUrl);
     } catch (err) {

@@ -19,17 +19,16 @@ const createShortUrl = async (req, res) => {
       const shortUrl = customAlias || shortid.generate();
       const newUrl = new URL({
         longUrl,
-        shortUrl, // Only store the alias, not the full URL
+        shortUrl, 
         customAlias,
         topic,
-        // createdBy: req.user.id,
-        createdBy: mongoose.Types.ObjectId(req.user.id), // Convert to ObjectId
+        createdBy: mongoose.Types.ObjectId(req.user.id), 
       });
   
       await newUrl.save();
       res.status(201).json({
         message: 'Short URL created successfully',
-        shortUrl: `${process.env.BASE_URL}/${shortUrl.replace(/^http:\/\/localhost:3000\/+/g, '')}`, // Clean duplicates
+        shortUrl: `${process.env.BASE_URL}/${shortUrl.replace(/^http:\/\/localhost:3000\/+/g, '')}`, 
         createdAt: newUrl.createdAt,
       });
     } catch (err) {
@@ -56,9 +55,8 @@ const createShortUrl = async (req, res) => {
       // Log analytics data
       const userAgent = req.headers['user-agent'];
       const ip = req.ip;
-      const os = extractOS(userAgent); // Utility function (see below)
-      const device = extractDevice(userAgent); // Utility function (see below)
-  
+      const os = extractOS(userAgent); 
+      const device = extractDevice(userAgent); 
       url.analytics.push({
         userAgent,
         ip,
@@ -74,7 +72,7 @@ const createShortUrl = async (req, res) => {
     }
   };
   
-  // Helper functions to extract OS and device type
+  
   const extractOS = (userAgent) => {
     if (/windows/i.test(userAgent)) return 'Windows';
     if (/macintosh/i.test(userAgent)) return 'macOS';

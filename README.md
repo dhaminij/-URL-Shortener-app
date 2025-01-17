@@ -112,8 +112,7 @@ GET /api/analytics/overall: Get overall analytics for all short URLs created by 
     docker-compose up --build
     Access the API at:
     http://localhost:3000
-
-8. Testing
+8.  Testing
 ```bash
     Run Tests
     The project includes integration tests written with Jest and Supertest. Run the tests with:

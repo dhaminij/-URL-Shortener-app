@@ -1,3 +1,52 @@
+# Node.js
 node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment Variables
 .env
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+debug.log
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Redis dump
+dump.rdb
+appendonly.aof
+
+# Build files
+dist/
+build/
+
+# Docker
+docker-compose.override.yml
+*.env
+
+# Swagger auto-generated files (if applicable)
+swagger.json
+swagger.yaml
+
+# Testing
 coverage/
+*.lcov
+
+# VS Code files
+.vscode/
+
+# MacOS-specific
+.DS_Store
+
+# Other
+.idea/

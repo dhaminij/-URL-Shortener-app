@@ -22,5 +22,8 @@ app.use(authRoutes);
 const urlRoutes = require('./routes/url');
 app.use(urlRoutes);
 
+const setupSwagger = require('./utils/swagger');
+setupSwagger(app);
+
 
 module.exports = app;

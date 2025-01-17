@@ -3,11 +3,11 @@ const shortid = require('shortid');
 const user = require('../models/user');
 const mongoose = require('mongoose');
 
+const redisClient = require('../utils/redisClient');
 const createShortUrl = async (req, res) => {
     try {
       const { longUrl, customAlias, topic } = req.body;
   
-      // Check if custom alias is already in use
       if (customAlias) {
         const existingUrl = await URL.findOne({ customAlias });
         if (existingUrl) {
@@ -40,7 +40,18 @@ const createShortUrl = async (req, res) => {
   const redirectShortUrl = async (req, res) => {
     try {
       const { alias } = req.params;
-      // Find the URL by shortUrl or customAlias
+  
+
+      // Check Redis cache
+    const cachedUrl = await redisClient.get(alias);
+    if (cachedUrl) {
+      console.log('Cache hit');
+      return res.redirect(cachedUrl);
+    }
+
+    console.log('Cache miss');
+
+
       const url = await URL.findOne({
         $or: [{ shortUrl: alias }, { customAlias: alias }],
       });
@@ -49,6 +60,9 @@ const createShortUrl = async (req, res) => {
         return res.status(404).json({ message: 'Short URL not found' });
       }
   
+      // Save to Redis cache
+    await redisClient.set(alias, url.longUrl, { EX: 3600 }); // Cache for 1 hour
+
       // Log analytics data
       const userAgent = req.headers['user-agent'];
       const ip = req.ip;
@@ -143,7 +157,7 @@ const createShortUrl = async (req, res) => {
         uniqueUsers: device.uniqueUsers.size,
       }));
   
-      res.json({
+      res.status(200).json({
         totalClicks,
         uniqueUsers,
         clicksByDate: Object.entries(clicksByDate).map(([date, count]) => ({

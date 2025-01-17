@@ -33,9 +33,11 @@ An advanced URL shortener API with comprehensive analytics, custom aliases, rate
    cd advanced-url-shortener
 
 2. Install dependencies:
+    ```bash
     npm install
 
 3. Configure environment variables: Create a .env file in the root directory and add the following:
+    ```bash
     PORT=3000
     MONGO_URI=mongodb://localhost:27017/urlshortener
     REDIS_HOST=localhost
@@ -45,12 +47,15 @@ An advanced URL shortener API with comprehensive analytics, custom aliases, rate
     BASE_URL=http://localhost:3000
 
 4. Start MongoDB and Redis:
+    ```bash
     mongod
 
 5. Start the server:
+    ```bash
     npm run dev
 
 6. API Endpoints
+    ```bash
 1. User Authentication
 GET /auth/google: Initiate Google Sign-In.
 GET /auth/google/callback: Callback URL for Google Sign-In.
@@ -101,17 +106,20 @@ GET /api/analytics/topic/{topic}: Get analytics for URLs grouped under a specifi
 GET /api/analytics/overall: Get overall analytics for all short URLs created by the user
 
 7.  Deployment
-Docker Deployment
-Build and start services using Docker Compose:
-docker-compose up --build
-Access the API at:
-http://localhost:3000
+ ```bash
+    Docker Deployment
+    Build and start services using Docker Compose:
+    docker-compose up --build
+    Access the API at:
+    http://localhost:3000
 
 8. Testing
-Run Tests
-The project includes integration tests written with Jest and Supertest. Run the tests with:
-npm test
+```bash
+    Run Tests
+    The project includes integration tests written with Jest and Supertest. Run the tests with:
+    npm test
 
 9. Documentation
-Swagger API Docs: Access detailed API documentation at:
-http://localhost:3000/api-docs
+    ```bash
+    Swagger API Docs: Access detailed API documentation at:
+    http://localhost:3000/api-docs
